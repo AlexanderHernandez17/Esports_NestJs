@@ -1,73 +1,83 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+markdown
+# Proyecto de Gestión de Torneos de Esports
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este es un proyecto desarrollado con NestJS para la gestión de torneos de esports. La aplicación proporciona funcionalidades para crear, actualizar, eliminar y consultar torneos, jugadores y resultados, lo que permite administrar eficientemente los eventos y mantener la información actualizada.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Configuración
 
-## Description
+### Requisitos previos
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Node.js y npm instalados en tu sistema
+- PostgreSQL instalado y configurado
 
-## Installation
+### Instalación
 
-```bash
-$ npm install
-```
+1. Clona este repositorio en tu máquina local:
 
-## Running the app
 
-```bash
-# development
-$ npm run start
+git clone <(https://github.com/AlexanderHernandez17/Esports_NestJs.git)>
 
-# watch mode
-$ npm run start:dev
 
-# production mode
-$ npm run start:prod
-```
+2. Navega hasta la carpeta del proyecto:
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
+cd esports_nestjs
 
-# e2e tests
-$ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
-```
+3. Instala las dependencias del proyecto:
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+npm install
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Configuración de la base de datos
 
-## License
+1. Crea una base de datos PostgreSQL para el proyecto.
 
-Nest is [MIT licensed](LICENSE).
+2. Configura las variables de entorno en un archivo `.env` en la raíz del proyecto:
+
+
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=tu_usuario
+DB_PASS=tu_contraseña
+DB_NAME=nombre_de_tu_base_de_datos
+
+
+3. Asegúrate de que la sincronización automática esté desactivada en `app.module.ts` si no deseas que TypeORM sincronice automáticamente las entidades con la base de datos en cada ejecución:
+
+typescript
+synchronize: false,
+
+
+4. Ejecuta las migraciones para crear las tablas en la base de datos:
+
+
+npm run migrate
+
+
+## Uso
+
+Una vez que hayas configurado la base de datos y ejecutado las migraciones, puedes iniciar el servidor de desarrollo con el siguiente comando:
+
+
+npm run start:dev
+
+
+Esto iniciará el servidor en `http://localhost:3000` por defecto.
+
+## Documentación
+
+La API está documentada utilizando Swagger. Puedes acceder a la documentación en `http://localhost:3000/api`.
+
+## Semillas
+
+Puedes ejecutar las semillas para poblar la base de datos con datos de ejemplo utilizando el siguiente comando:
+
+
+npm run seed
+
+
+## Contribución
+
+Si deseas contribuir al proyecto, puedes hacerlo enviando un pull request. Por favor, asegúrate de seguir las directrices de contribución.
