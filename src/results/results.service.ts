@@ -1,26 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Result } from './entities/result.entity';
 import { CreateResultDto } from './dto/create-result.dto';
-import { UpdateResultDto } from './dto/update-result.dto';
 
 @Injectable()
-export class ResultsService {
-  create(createResultDto: CreateResultDto) {
-    return 'This action adds a new result';
+export class ResultService {
+  constructor(
+    @InjectRepository(Result)
+    private readonly resultRepository: Repository<Result>,
+  ) {}
+
+  async create(createResultDto: CreateResultDto) {
+    const result = this.resultRepository.create(createResultDto);
+    return this.resultRepository.save(result);
   }
 
-  findAll() {
-    return `This action returns all results`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} result`;
-  }
-
-  update(id: number, updateResultDto: UpdateResultDto) {
-    return `This action updates a #${id} result`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} result`;
+  async findAllByTournamentId(tournamentId: string, page: number = 1, limit: number = 10) {
+    const skip = (page - 1) * limit;
+    const [results, total] = await this.resultRepository.findAndCount({
+      where: { tournament: { id: tournamentId } },
+      take: limit,
+      skip,
+    });
+    const totalPages = Math.ceil(total / limit);
+    return { results, total, totalPages };
   }
 }
