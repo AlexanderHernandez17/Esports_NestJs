@@ -1,34 +1,37 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Param } from '@nestjs/common';
 import { TournamentService } from './tournament.service';
-import { CreateTournamentDto } from './dto/create-tournament.dto';
-import { UpdateTournamentDto } from './dto/update-tournament.dto';
+import { Player } from 'src/player/entities/player.entity';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('tournament')
+@ApiTags('tournament')
+@Controller('Tournament')
 export class TournamentController {
   constructor(private readonly tournamentService: TournamentService) {}
 
-  @Post()
-  create(@Body() createTournamentDto: CreateTournamentDto) {
-    return this.tournamentService.create(createTournamentDto);
-  }
-
   @Get()
-  findAll() {
-    return this.tournamentService.findAll();
+  async findAll(
+    @Query('puntajeMin') puntajeMin?: number,
+    @Query('order') order?: 'ASC' | 'DESC',
+    @Query('page') page: number = 1,
+    @Query('pageSize') pageSize: number = 10,
+  ) {
+    return this.tournamentService.findAll(puntajeMin, order, page, pageSize);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tournamentService.findOne(+id);
+  @Post(':id/jugadores')
+  async addJugador(
+    @Param('id') id: string,
+    @Body() player: Player,
+  ) {
+    return this.tournamentService.addJugador(id, player);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTournamentDto: UpdateTournamentDto) {
-    return this.tournamentService.update(+id, updateTournamentDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tournamentService.remove(+id);
+  @Post(':tournamentId/players/:playerId/results')
+  async addResultado(
+    @Param('tournamentId') tournamentId: string,
+    @Param('playerId') playerId: string,
+    @Body('scores') scores: number,
+  ) {
+    return this.tournamentService.addResultado(tournamentId, playerId, scores);
   }
 }

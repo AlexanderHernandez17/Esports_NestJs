@@ -8,7 +8,7 @@ export class Result {
   id: string;
 
   @Column()
-  puntos: number;
+  score: number;
 
   @ManyToOne(() => Tournament, (tournament) => tournament.results, { onDelete: 'CASCADE' })
   tournament: Tournament;

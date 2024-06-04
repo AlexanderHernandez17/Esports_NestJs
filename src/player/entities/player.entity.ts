@@ -8,10 +8,13 @@ export class Player {
   id: string;
 
   @Column()
-  nombre: string;
+  name: string;
 
   @Column()
-  edad: number;
+  email:string
+
+  @Column()
+  age: number;
 
   @ManyToOne(() => Tournament, (tournament) => tournament.players, { onDelete: 'CASCADE' })
   tournament: Tournament;
