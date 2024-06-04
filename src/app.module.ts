@@ -5,6 +5,7 @@ import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { TournamentModule } from "./tournament/tournament.module";
 import { PlayerModule } from './player/player.module';
+import { ResultsModule } from './results/results.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { PlayerModule } from './player/player.module';
       "ssl": true
     }),
     TournamentModule,
-    PlayerModule],
+    PlayerModule,
+    ResultsModule],
   controllers: [AppController],
   providers: [AppService],
 })
