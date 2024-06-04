@@ -7,7 +7,7 @@ import { Tournament } from './entities/tournament.entity';
 export class TournamentService {
   constructor(
     @InjectRepository(Tournament)
-    private readonly torneoRepository: Repository<Tournament>,
+    private readonly tournamentRepository: Repository<Tournament>,
   ) {}
 
   async findAll(

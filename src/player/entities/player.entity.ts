@@ -1,3 +1,4 @@
+import { Result } from 'src/results/entities/result.entity';
 import { Tournament } from 'src/tournament/entities/tournament.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
 
@@ -12,9 +13,9 @@ export class Player {
   @Column()
   edad: number;
 
-  @ManyToOne(() => Tournament, (torneo) => torneo.jugadores, { onDelete: 'CASCADE' })
-  torneo: Torneo;
+  @ManyToOne(() => Tournament, (tournament) => tournament.players, { onDelete: 'CASCADE' })
+  tournament: Tournament;
 
-  @OneToMany(() => Resultado, (resultado) => resultado.jugador)
-  resultados: Resultado[];
+  @OneToMany(() => Result, (result) => result.player)
+  result: Result[];
 }
