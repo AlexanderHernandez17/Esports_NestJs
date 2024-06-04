@@ -1,3 +1,4 @@
+import { Player } from 'src/player/entities/player.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
@@ -6,12 +7,15 @@ export class Tournament {
   id: string;
 
   @Column()
-  nombre: string;
+  name: string;
 
   @Column()
-  puntaje: number;
+  score: number;
 
-  @OneToMany(() => Jugador, (jugador) => jugador.torneo)
-  jugadores: Jugador[];
+  @OneToMany(() => Player, (player) => player.tournament)
+  players: Player[];
+
+  @OneToMany(() => Resultado, (resultado) => resultado.torneo)
+  scores: Resultado[];
 }
 
