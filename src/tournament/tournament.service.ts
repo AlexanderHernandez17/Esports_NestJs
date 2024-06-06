@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Tournament } from './entities/tournament.entity';
 import { Player } from 'src/player/entities/player.entity';
 import { Result } from 'src/results/entities/result.entity';
+import { CreateTournamentDto } from './dto/create-tournament.dto';
 
 @Injectable()
 export class TournamentService {
@@ -16,27 +17,30 @@ export class TournamentService {
     private readonly resultsRepository: Repository<Result>,
   ) {}
 
-  async findAll(
-    puntajeMin?: number,
-    order?: 'ASC' | 'DESC',
-    page: number = 1,
-    pageSize: number = 10,
-  ): Promise<{ data: Tournament[], count: number }> {
+  async create(createTournamentDto: CreateTournamentDto): Promise<Tournament> {
+    const tournament = this.tournamentRepository.create(createTournamentDto);
+    return this.tournamentRepository.save(tournament);
+  }
+
+  async findAll(puntajeMin?: number, order: 'ASC' | 'DESC' = 'ASC', page: number = 1, pageSize: number = 10) {
     const queryBuilder = this.tournamentRepository.createQueryBuilder('tournament');
-    queryBuilder.leftJoinAndSelect('tournament.players', 'player');
-    queryBuilder.leftJoinAndSelect('tournament.results', 'result');
-    
-    if (puntajeMin) {
-      queryBuilder.andWhere('result.score >= :puntajeMin', { puntajeMin });
+
+    if (puntajeMin !== undefined) {
+      queryBuilder.andWhere('tournament.score >= :puntajeMin', { puntajeMin });
     }
-  
-    const [data, count] = await queryBuilder
-      .orderBy('result.score', order || 'ASC')
-      .skip((page - 1) * pageSize)
-      .take(pageSize)
-      .getManyAndCount();
-  
-    return { data, count };
+
+    queryBuilder.orderBy('tournament.score', order)
+                .skip((page - 1) * pageSize)
+                .take(pageSize);
+
+    const [results, total] = await queryBuilder.getManyAndCount();
+
+    return {
+      data: results,
+      total,
+      page,
+      pageSize,
+    };
   }
   
 

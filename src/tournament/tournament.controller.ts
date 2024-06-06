@@ -2,12 +2,23 @@ import { Controller, Get, Query, Post, Body, Param } from '@nestjs/common';
 import { TournamentService } from './tournament.service';
 import { Player } from 'src/player/entities/player.entity';
 import { ApiTags, ApiQuery, ApiParam, ApiBody, ApiCreatedResponse } from '@nestjs/swagger';
+import { CreateTournamentDto } from './dto/create-tournament.dto';
+import { Tournament } from './entities/tournament.entity';
+import { CreateResultDto } from 'src/results/dto/create-result.dto';
 
 @ApiTags('Tournament')
 @Controller('tournament')
 export class TournamentController {
   constructor(private readonly tournamentService: TournamentService) {}
 
+
+  @Post()
+  @ApiBody({ type: CreateTournamentDto })
+  @ApiCreatedResponse({ description: 'The tournament has been successfully created.', type: Tournament })
+  async createTournament( @Body() createTournamentDto: CreateTournamentDto): Promise<Tournament> {
+    return this.tournamentService.create(createTournamentDto);
+  }
+  
   @Get()
   @ApiQuery({
     name: 'puntajeMin',
@@ -59,8 +70,9 @@ export class TournamentController {
   async addResultado(
     @Param('tournamentId') tournamentId: string,
     @Param('playerId') playerId: string,
-    @Body() scores: number, 
+    @Body() createResultDto: CreateResultDto, 
   ) {
-    return this.tournamentService.addResultado(tournamentId, playerId, scores);
+    const { score } = createResultDto;
+    return this.tournamentService.addResultado(tournamentId, playerId, score);
   }
 }
