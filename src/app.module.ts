@@ -7,6 +7,7 @@ import { TournamentModule } from "./tournament/tournament.module";
 import { PlayerModule } from './player/player.module';
 import { ResultsModule } from './results/results.module';
 import { SeedsModule } from './seeds/seeds.module';
+import { PrizeModule } from './prize/prize.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { SeedsModule } from './seeds/seeds.module';
     TournamentModule,
     PlayerModule,
     ResultsModule,
-    SeedsModule],
+    SeedsModule,
+    PrizeModule],
   controllers: [AppController],
   providers: [AppService],
 })

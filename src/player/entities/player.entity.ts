@@ -1,3 +1,4 @@
+import { PrizeDrawResult } from 'src/prize/entities/prizeDrawResult.entity';
 import { Result } from 'src/results/entities/result.entity';
 import { Tournament } from 'src/tournament/entities/tournament.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
@@ -21,4 +22,7 @@ export class Player {
 
   @OneToMany(() => Result, (result) => result.player)
   result: Result[];
+
+  @OneToMany(() => PrizeDrawResult, prizeDrawResult => prizeDrawResult.player)
+  prizeDrawResults: PrizeDrawResult[];
 }
