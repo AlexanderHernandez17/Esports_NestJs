@@ -1,4 +1,3 @@
-// prize-draw-result.entity.ts
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn } from 'typeorm';
 import { Prize } from './prize.entity';
 import { Player } from 'src/player/entities/player.entity';
@@ -17,3 +16,4 @@ export class PrizeDrawResult {
   @ManyToOne(() => Prize, prize => prize.prizeDrawResults)
   prize: Prize;
 }
+

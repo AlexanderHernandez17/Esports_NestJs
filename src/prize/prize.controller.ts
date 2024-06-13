@@ -38,7 +38,7 @@ export class PrizeController {
       if (error.message === 'Player has already claimed a prize today' || error.message === 'No prizes available') {
         throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
       }
-      throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException('Error hola hola', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
